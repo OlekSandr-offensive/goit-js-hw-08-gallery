@@ -1,7 +1,8 @@
 import collection from './gallery-items.js';
 
 const container = document.querySelector('.js-gallery');
-// const urlRef = document.querySelector('');
+const urlRef = document.querySelector('.gallery');
+console.log(urlRef);
 const cardMarkup = createGalleryHtml(collection);
 
 container.insertAdjacentHTML('afterbegin', cardMarkup);
