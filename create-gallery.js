@@ -1,84 +1,117 @@
-// import collection from './gallery-items.js';
+import collection from './gallery-items.js';
 
-// const container = document.querySelector('.js-gallery');
-// // const urlRef = document.querySelector('.gallery');
-// // console.log(urlRef);
-// const cardMarkup = createGalleryHtml(collection);
+const container = document.querySelector('ul.js-gallery');
+const openModal = document.querySelector('div.js-lightbox');
+const closeModalBtn = document.querySelector('lightbox__button');
+const lightboxImg = document.querySelector('img.lightbox__image');
+const cardMarkup = createGalleryHtml(collection);
 
-// container.insertAdjacentHTML('afterbegin', cardMarkup);
-// container.addEventListener('click', onContainerClick);
+container.insertAdjacentHTML('afterbegin', cardMarkup);
+// closeModalBtn.forEach(container => {
+//   container.addEventListener('click', onContainerClick, { one: true });
+// });
+container.addEventListener('click', onContainerClick);
 
-// function createGalleryHtml(collection) {
-//   return collection
-//     .map(({ preview, original, description }) => {
-//       return `<li class="gallery__item">
-//   <a
-//     class="gallery__link"
-//     href="${original}"
-//   >
-//     <img
-//       class="gallery__image"
-//       src="${preview}"
-//       data-source="${original}"
-//       alt="${description}"
-//     />
-//   </a>
-// </li>`;
-//     })
-//     .join('');
-// }
+// closeModalBtn.addEventListener('click', onCloseModal);
 
-import data from '../gallery-items.js';
-const addElementsGallery = document.querySelector('.js-gallery');
-const openModal = document.querySelector('.js-lightbox');
-const closeModalBtn = document.querySelector('[data-action="close-lightbox"]');
-
-const makeListImage = (elemImage, index) => {
-  //тут  вішаєш клік і прцюєш  з  нею
-
-  return `
-  <li class="gallery__item">
+function createGalleryHtml(collection) {
+  return collection
+    .map(({ preview, original, description }) => {
+      return `<li class="gallery__item">
   <a
     class="gallery__link"
-    href=${elemImage.preview}
+    href="${original}"
   >
     <img
       class="gallery__image"
-      src=${elemImage.original}
-      data-source=${elemImage.description}
-      alt="Tulips"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
     />
   </a>
-</li>
-`;
-};
+</li>`;
+    })
+    .join('');
+}
 
-const makeGalleryElements = data.map(makeListImage).join('');
-addElementsGallery.insertAdjacentHTML('afterbegin', makeGalleryElements);
-addElementsGallery.addEventListener('click', onContainerClick);
-// openModal.addEventListener('click', onOpenModal);
-closeModalBtn.addEventListener('click', onCloseModal);
+// console.log(createGalleryHtml(collection));
 
 function onContainerClick(evt) {
-  const isGalleryLinkEl = evt.target.classList.contains('gallery__link');
+  const isGalleryLinkEl = evt.target.classList.contains('gallery__image');
   if (!isGalleryLinkEl) {
     return;
   }
+  closeModalBtn.addEventListener('click', onCloseModal);
+  // closeModalBtn.classList.remove('is-open');
+  openModal.classList.add('is-open');
+  lightboxImg.src = evt.target.dataset.source;
+  if (openModal) {
+    onCloseModal();
+  }
   // console.log(evt.target);
+  // evn.preventDefault();
 }
 
 // function onOpenModal() {
-//   document.body.classList.add('is-open');
-//   document.body.classList.remove('is-open');
+//   document.querySelector.classList.add('is-open');
 // }
 
-// function onCloseModal() {
-//   document.body.classList.remove('is-open');
+function onCloseModal() {
+  lightboxImg.classList.remove('is-open');
+}
+
+// openModal.addEventListener('click', evt => {
+//   if (evt.currentTarget === evn.target) {
+//     document.body.classList.add('is-open');
+//   } else {
+//     document.body.classList.remove('is-open');
+//   }
+// });
+
+// import data from '../gallery-items.js';
+// const galleryContainer = document.querySelector('.js-gallery');
+// galleryContainer.addEventListener('click', onGalleryContainerClick);
+// // const myClickButton = document.querySelector(".myButtonTest");
+
+// const makeListImage = ({ preview, original, description }) => {
+//   return `
+//   <li class="gallery__item">
+//   <a
+//     class="gallery__link"
+//     href=${original}
+//   >
+//     <img
+//       class="gallery__image"
+//       src=${preview}
+//       data-source=${original}
+//       alt=${description}
+//     />
+//   </a>
+// </li>
+// `;
+// };
+// const createGalleryElements = data.map(makeListImage).join('');
+// galleryContainer.insertAdjacentHTML('afterbegin', createGalleryElements);
+// const openBtnForImage = document.querySelector('.lightbox');
+
+// function onGalleryContainerClick(evt) {
+//   if (evt.target.nodeName !== 'IMG') {
+//     console.log(evt.target.nodeName);
+//     return;
+//   }
+//   const currentActiveImg = evt.target.dataset.source;
+
+//   openBtnForImage.classList.add('is-open');
+//   if (currentActiveImg) {
+//     const imageElementShow = document.querySelector('.lightbox__image');
+//     imageElementShow.src = currentActiveImg;
+//     const clickBtnCloseRef = document.querySelector('.lightbox__button');
+//     clickBtnCloseRef.addEventListener('click', clickBtn);
+//     console.log(imageElementShow);
+//   }
+//   console.log(currentActiveImg);
 // }
-openModal.addEventListener('click', evt => {
-  if (evt.currentTarget === evn.target) {
-    document.body.classList.add('is-open');
-  } else {
-    document.body.classList.remove('is-open');
-  }
-});
+// const clickBtn = () => {
+//   const changeBtn = document.querySelector('.lightbox__button');
+//   openBtnForImage.classList.remove('is-open');
+// };
