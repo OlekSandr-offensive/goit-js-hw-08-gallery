@@ -1,14 +1,14 @@
 import collection from './gallery-items.js';
 
-const container = document.querySelector('ul.js-gallery');
+const galleryContainer = document.querySelector('ul.js-gallery');
 const openModal = document.querySelector('div.js-lightbox');
 const closeModalBtn = document.querySelector('[data-action="close-lightbox"]');
 const lightboxImg = document.querySelector('img.lightbox__image');
 
 const cardMarkup = createGalleryHtml(collection);
 
-container.insertAdjacentHTML('afterbegin', cardMarkup);
-container.addEventListener('click', onContainerClick);
+galleryContainer.insertAdjacentHTML('afterbegin', cardMarkup);
+galleryContainer.addEventListener('click', onGalleryContainerClick);
 
 function createGalleryHtml(collection) {
   return collection
@@ -30,10 +30,10 @@ function createGalleryHtml(collection) {
     .join('');
 }
 
-function onContainerClick(evt) {
+function onGalleryContainerClick(evt) {
   evt.preventDefault();
-  const isGalleryLinkEl = evt.target.classList.contains('gallery__image');
-  if (!isGalleryLinkEl) {
+  const isGalleryImgEl = evt.target.classList.contains('gallery__image');
+  if (!isGalleryImgEl) {
     return;
   }
   closeModalBtn.addEventListener('click', onCloseModal);
