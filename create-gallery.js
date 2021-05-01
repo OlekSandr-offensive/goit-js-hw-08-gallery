@@ -13,7 +13,7 @@ galleryContainer.addEventListener('click', onGalleryContainerClick);
 
 function createGalleryHtml(collection) {
   return collection
-    .map(({ preview, original, description }) => {
+    .map(({ preview, original, description }, index) => {
       return `<li class="gallery__item">
   <a
     class="gallery__link"
@@ -39,7 +39,7 @@ function onGalleryContainerClick(evt) {
     return;
   }
   window.addEventListener('keydown', onEscKeyPress);
-  closeLightboxOverlay.addEventListener('click', onOverlayClick);
+  closeLightboxOverlay.addEventListener('click', onCloseModal);
   closeModalBtn.addEventListener('click', onCloseModal);
   openModal.classList.add('is-open');
   lightboxImg.src = evt.target.dataset.source;
@@ -48,12 +48,7 @@ function onGalleryContainerClick(evt) {
 function onCloseModal() {
   window.removeEventListener('keydown', onEscKeyPress);
   openModal.classList.remove('is-open');
-}
-
-function onOverlayClick(evt) {
-  if (evt.currentTarget === evt.target) {
-    onCloseModal();
-  }
+  lightboxImg.src = '';
 }
 
 function onEscKeyPress(evt) {
