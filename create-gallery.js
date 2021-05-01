@@ -4,6 +4,7 @@ const galleryContainer = document.querySelector('ul.js-gallery');
 const openModal = document.querySelector('div.js-lightbox');
 const closeModalBtn = document.querySelector('[data-action="close-lightbox"]');
 const lightboxImg = document.querySelector('img.lightbox__image');
+const closeLightboxOverlay = document.querySelector('.lightbox__overlay');
 
 const cardMarkup = createGalleryHtml(collection);
 
@@ -33,14 +34,32 @@ function createGalleryHtml(collection) {
 function onGalleryContainerClick(evt) {
   evt.preventDefault();
   const isGalleryImgEl = evt.target.classList.contains('gallery__image');
+
   if (!isGalleryImgEl) {
     return;
   }
+  window.addEventListener('keydown', onEscKeyPress);
+  closeLightboxOverlay.addEventListener('click', onOverlayClick);
   closeModalBtn.addEventListener('click', onCloseModal);
   openModal.classList.add('is-open');
   lightboxImg.src = evt.target.dataset.source;
 }
 
 function onCloseModal() {
+  window.removeEventListener('keydown', onEscKeyPress);
   openModal.classList.remove('is-open');
+}
+
+function onOverlayClick(evt) {
+  if (evt.currentTarget === evt.target) {
+    onCloseModal();
+  }
+}
+
+function onEscKeyPress(evt) {
+  const ESC_KEY_CODE = 'Escape';
+
+  if (evt.code === ESC_KEY_CODE) {
+    onCloseModal();
+  }
 }
