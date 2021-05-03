@@ -24,6 +24,7 @@ function createGalleryHtml(collection) {
       src="${preview}"
       data-source="${original}"
       alt="${description}"
+      data-index="${index}"
     />
   </a>
 </li>`;
@@ -43,6 +44,7 @@ function onGalleryContainerClick(evt) {
   closeModalBtn.addEventListener('click', onCloseModal);
   openModal.classList.add('is-open');
   lightboxImg.src = evt.target.dataset.source;
+  // const onMyIndex = evt.target.dataset.index;
 }
 
 function onCloseModal() {
@@ -50,11 +52,31 @@ function onCloseModal() {
   openModal.classList.remove('is-open');
   lightboxImg.src = '';
 }
+function clickArrowLeft() {
+  console.log('click clickArrowLeft');
+  lightboxImg.src = collection[0].original;
+}
+function clickArrowRight() {
+  console.log('click clickArrowRight');
+  lightboxImg.src = collection[6].original;
+}
 
 function onEscKeyPress(evt) {
-  const ESC_KEY_CODE = 'Escape';
-
-  if (evt.code === ESC_KEY_CODE) {
-    onCloseModal();
+  // const ESC_KEY_CODE = 'Escape';
+  // if (evt.code === ESC_KEY_CODE) {
+  //   onCloseModal();
+  // }
+  switch (evt.code) {
+    case 'Escape':
+      onCloseModal();
+      break;
+    case 'ArrowLeft':
+      clickArrowLeft();
+      break;
+    case 'ArrowRight':
+      clickArrowRight();
+      break;
+    default:
+      console.log(evt);
   }
 }
